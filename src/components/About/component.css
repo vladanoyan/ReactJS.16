@@ -1,0 +1,10 @@
+.About {
+  background-color: #222;
+  height: 150px;
+  padding: 50px;
+  transform: scale(1.1);
+  text-align: center; }
+  .About p {
+    color: greenyellow; }
+
+/*# sourceMappingURL=component.css.map */

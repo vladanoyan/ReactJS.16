@@ -1,0 +1,16 @@
+.Home {
+  background-color: #222;
+  height: 150px;
+  padding: 50px;
+  transform: scale(1.1);
+  text-align: center; }
+  .Home p {
+    color: #fff; }
+  .Home .navbar {
+    background-color: red;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+
+/*# sourceMappingURL=component.css.map */

@@ -1,32 +1,46 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
+import OwlCarousel from '../Owl-corousel';
+import {Animated} from "react-animated-css";
+import CarouselPages from '../Owl-corousel-pages';
 import './component.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTh } from '@fortawesome/free-solid-svg-icons';
+library.add(faTh);
 
 class Home extends Component {
+  constructor(){
+    super();
+    this.state={
+      Visible: false,
+      toggle: true,
+      route: '',
+      position: '',
+    }
+  }
+  toggleClick=()=>{
+    this.setState({ toggle: !this.state.toggle });
+  };
+  redirectPage=(e, id)=>{
+    this.toggleClick();
+    this.setState({ Visible: !this.state.Visible });
+    this.setState({ route: e , position: id});
+    console.log(this.state.position)
+  };
   render() {
-    const list = this.props.list.map((item) => {
-      return(
-        <Col xs={12} md={4} key={item.id}>
-          <Link to="/about">
-            <p>{item.text}</p>
-          </Link>
-        </Col>
-      )
-    });
     return (
-      <div className="Home">
-        <Grid fluid>
-          <Row>
-            <Col xs={12} className="navbar"> Navbar </Col>
-          </Row>
-        </Grid>
-        <Grid fluid>
-          <Row>
-            {list}
-          </Row>
-        </Grid>
+      <div className="home">
+        <OwlCarousel items={this.props.list} toggle={this.state.toggle} animate={this.redirectPage} />
+        <Animated animationIn="fadeIn content" animationOut="content" isVisible={this.state.Visible}>
+          <FontAwesomeIcon
+            icon="th"
+            size='2x'
+            className="IconToggle"
+            onClick={this.toggleClick}
+          />
+          <CarouselPages items={this.props.list} position={this.state.position} />
+        </Animated>
       </div>
     );
   }

@@ -1,36 +1,94 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
-import './component.css';
+import cs from './owl.css';
 
-class About extends Component {
+// import $ from 'jquery';
+
+const options = {
+  loop: true,
+  autoplay: true,
+  margin: 0,
+  slideBy: 1,
+  dotsEach: true,
+  responsive:{
+    0:{
+      items:1
+    },
+    600:{
+      items:2
+    },
+    800:{
+      items:3
+    },
+    1000:{
+      items:4
+    },
+  }
+};
+
+class Owlcarousel extends Component {
+  componentDidMount(){
+    $('.owl-carousel').owlCarousel(
+      {
+        loop: true,
+        autoplay: true,
+        margin: 0,
+        slideBy: 1,
+        dotsEach: true,
+        nav: true,
+        responsive:{
+          0:{
+            items:1
+          },
+          600:{
+            items:2
+          },
+          800:{
+            items:1
+          },
+          1000:{
+            items:1
+          },
+        }
+      }
+    )
+
+  }
+
+
+  direct(name, id) {
+    this.props.animate(name, id);
+  };
+
   render() {
-    const list = this.props.list.map((item) => {
-      return(
-        <Col xs={12} md={4} key={item.id}>
-          <Link to="/">
-            <p>{item.text}</p>
-          </Link>
-        </Col>
-      )
-    });
+
     return (
-      <Grid fluid className="About">
-        <Row>
-          {list}
-        </Row>
-      </Grid>
+      <div>
+        <div className={this.props.toggle ? `${cs.duration}` : `${cs.duration} ${cs.downFade}`}>
+          <div className={cs.logo}>
+            <img src="/static/images/Larima_NEW_LOGO.png" alt="logo" />
+          </div>
+          <div className="owl-carousel owl-theme" {...options}>
+            {
+              this.props.items.map((item, index)=>{
+                return(
+                  <div className={cs.downMenu} style={{animationDuration: `${item.timer}s`}} key={index}>
+                    <div className="item" id={cs.img} >
+                      <img src={item.src} alt={item.name}/>
+                      <div className={cs.discription}>
+                        <h1><p onClick={this.direct.bind(this, item.name, item.id)} className={cs.link}>{item.name}</p></h1>
+                        <p className={cs.textWhite}>{item.text}</p>
+                        <div className={cs.separator} />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    list: state.list,
-  };
-};
-
-
-export default connect(mapStateToProps)(About);
-
+export default Owlcarousel;

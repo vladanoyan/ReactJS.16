@@ -114,7 +114,6 @@ module.exports = (env) => {
       ],
     },
 
-
     /**
      * Plugin configuration
      *
@@ -122,6 +121,11 @@ module.exports = (env) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: path.join(__dirname, 'index.html'),
+      }),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
       }),
     ],
   };
